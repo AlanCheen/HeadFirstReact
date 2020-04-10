@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Hello React!</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const A = 65 // ASCII character code
+
+        class Alphabet extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleClick = this.handleClick.bind(this);
+                this.state = {
+                    justClicked: null,
+                    letters: Array.from({ length: 26 }, (_, i) => String.fromCharCode(A + i))
+                };
+            }
+            handleClick(letter) {
+                this.setState({ justClicked: letter });
+            }
+            render() {
+                return (
+                    <div>
+                        Just clicked: {this.state.justClicked}
+                        <ul>
+                            {this.state.letters.map(letter =>
+                                <li key={letter} onClick={() => this.handleClick(letter)}>
+                                    {letter}
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Alphabet />, document.getElementById('root'))
+    </script>
+</body>
+
+</html>

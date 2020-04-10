@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Hello React!</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+</head>
+
+<body>
+    <form>
+        <label>
+            名字:
+            <input type="text" name="name" />
+        </label>
+        <input type="submit" value="提交" />
+    </form>
+
+    <p>input 文本标签的组件：</p>
+
+    <div id="root"></div>
+
+
+    <p>textarea 标签的组件：</p>
+    <div id="textarea"></div>
+
+
+    <p>select 标签的组件：</p>
+    <div id="select"></div>
+
+    <script type="text/babel">
+
+        class NamedForm extends React.Component {
+
+            constructor(props) {
+                super(props);
+                this.state = {
+                    value: 'defaultValue'
+                }
+            }
+
+            handleSubmit = (e) => {
+                //必须
+                e.preventDefault();
+                alert('提交的名字: ' + this.state.value);
+            }
+
+            handleChange = (e) => {
+                console.warn('change:' + e.target.value)
+                this.setState(
+                    {
+                        value: e.target.value
+                    }
+                )
+            }
+
+            render() {
+                return (
+                    <div>
+                        <form onSubmit={this.handleSubmit}>
+                            <label> 名字：</label>
+                            <input type="text" onChange={this.handleChange} value={this.state.value}></input>
+                            <input type="submit" value="提交"></input>
+                        </form>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <NamedForm />,
+            document.getElementById('root')
+        )
+
+        class NameTextArea extends React.Component {
+
+            constructor(props) {
+                super(props)
+
+                this.state = {
+                    value: '程序亦非猿帅气'
+                };
+            }
+
+            handleSubmit = (e) => {
+                alert('提交的文章: ' + this.state.value);
+                event.preventDefault();
+            }
+
+            handleChange = (e) => {
+                this.setState({
+                    value: e.target.value
+                })
+            }
+
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit} >
+                        <lable>
+                            文章：
+                            <textarea value={this.state.value} onChange={this.handleChange} ></textarea>
+                        </lable>
+                        <input type="submit" value="提交" />
+                    </form>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <NameTextArea />,
+            document.getElementById('textarea')
+        )
+
+
+
+        class Foo extends React.Component {
+
+            constructor(props) {
+                super(props)
+
+                this.state = {
+                    value: 'Java'
+                };
+            }
+
+            handleClick = (e) => {
+                console.warn('handleClick')
+            }
+
+            handleSubmit = (e) => {
+                alert('你选择了: ' + this.state.value);
+                event.preventDefault();
+            }
+
+            handleChange = (e) => {
+                this.setState({
+                    value: e.target.value
+                })
+            }
+
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        <select onChange={this.handleChange} value={this.state.value}>
+                            <option value="Java">Java</option>
+                            <option value="Kotlin">Kotlin</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="Swift">Swift</option>
+                        </select>
+                        <input type="submit" value="提交" />
+                    </form>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Foo />,
+            document.getElementById('select')
+        )
+
+
+    </script>
+
+</body>
+
+</html>

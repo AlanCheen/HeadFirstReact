@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>列表 和 Key</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <p>用列表组件渲染：</p>
+    <div id="list"></div>
+
+    <p>用列表组件渲染2：</p>
+    <div id="list2"></div>
+
+    <script type="text/babel">
+
+        function Numbers() {
+            const numbers = [1, 2, 3, 4, 5];
+            return (
+                <ul>
+                    {
+                        numbers.map(
+                            (number) => <li key={number.toString()}>{number}</li>
+                        )
+                    }
+                </ul>
+            )
+        }
+
+        ReactDOM.render(<Numbers />, document.getElementById('root'))
+
+        function ListItem(props) {
+            // 正确！这里不需要指定 key：
+            return <li>{props.value}</li>;
+        }
+
+        function NumberList1(props) {
+            const numbers = props.numbers;
+            const listItems = numbers.map((number) =>
+                // 正确！key 应该在数组的上下文中被指定
+                <ListItem key={number.toString()} value={number} />
+
+            );
+            return (
+                <ul>
+                    {listItems}
+                </ul>
+            )
+        }
+
+        const numbers = [1, 2, 3, 4, 5];
+
+        ReactDOM.render(<NumberList1 numbers={numbers} />, document.getElementById('list'))
+
+
+        function NumberItem(props) {
+            return <li>{props.value}</li>;
+        }
+
+        function NumberList(props) {
+            return (<ul>
+                {
+                  props.numbers.map((number) => 
+                  <NumberItem key={number.toString()} value={number} />
+                )
+                }
+            </ul>);
+        }
+        const numberLists = [1, 2, 3, 4, 5, 6, 7];
+
+        ReactDOM.render(<NumberList numbers={numberLists} />, document.getElementById('list2'))
+
+    </script>
+</body>
+
+</html>
